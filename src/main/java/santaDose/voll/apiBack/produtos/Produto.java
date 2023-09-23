@@ -23,6 +23,7 @@ public class Produto {
     private String datavalidade;
     private String datacadastro;
     private String quantidade;
+    private Boolean ativo;
 
 
     //Para alterar alguma table ou algo no banco de dados como inserir um novo valor ... devemos aqui criar o private dessa nova variavel
@@ -32,6 +33,7 @@ public class Produto {
 
     //Criando o construtor que pega os exatos valores para retornar no ProdutosController e salvar no banco de dados
     public Produto(DadosCadastroProdutos dados) {
+        this.ativo = true;
         this.tipo = dados.tipo();
         this.nome = dados.nome();
         this.valor = dados.valor();
@@ -40,5 +42,29 @@ public class Produto {
         this.datavalidade = dados.datavalidade();
         this.datacadastro = dados.datacadastro();
         this.quantidade = dados.quantidade();
+    }
+
+    //Construtor para a atualização dos dados, deve ser null nois não vai retornar nada
+    //Usando o IF para testar se o usuario tentou atualizar certo dado, se sim, atualiza, se não, n precisa atualizar não é obrigatório todos os campos
+    public void atualizarInformacoesProdutos(DadosAtualizacaoProdutos dados) {
+        if(dados.tipo() != null) {
+            this.tipo = dados.tipo();
+        }
+        if(dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+        if(dados.valor() != null) {
+            this.valor = dados.valor();
+        }
+        if(dados.datavalidade() != null) {
+            this.datavalidade = dados.datavalidade();
+        }
+        if(dados.quantidade() != null) {
+            this.quantidade = dados.quantidade();
+        }
+    }
+
+    public void excluir() {
+        this.ativo = false;
     }
 }

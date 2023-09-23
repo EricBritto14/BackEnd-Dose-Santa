@@ -38,3 +38,5 @@ public record DadosCadastroProdutos(
         String quantidade) {
 
 }
+
+

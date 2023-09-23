@@ -22,8 +22,10 @@ public class Variedades {
     private String datavalidade;
     private String datacadastro;
     private String quantidade;
+    private Boolean ativo;
 
     public Variedades(DadosCadastroVariedades dadosVariedade) {
+        this.ativo = true;
         this.tipo = dadosVariedade.tipo();
         this.nome = dadosVariedade.nome();
         this.valor = dadosVariedade.valor();
@@ -31,5 +33,27 @@ public class Variedades {
         this.datacadastro = dadosVariedade.datacadastro();
         this.quantidade = dadosVariedade.quantidade();
 
+    }
+
+    public void atualizarInformacoesVariedades(DadosAtualizacaoVariedades dadosVariedade) {
+        if(dadosVariedade.tipo() != null) {
+            this.tipo = dadosVariedade.tipo();
+        }
+        if(dadosVariedade.nome() != null) {
+            this.nome = dadosVariedade.nome();
+        }
+        if(dadosVariedade.valor() != null) {
+            this.valor = dadosVariedade.valor();
+        }
+        if(dadosVariedade.datavalidade() != null) {
+            this.datavalidade = dadosVariedade.datavalidade();
+        }
+        if(dadosVariedade.quantidade() != null) {
+            this.quantidade = dadosVariedade.quantidade();
+        }
+    }
+
+    public void excluir() {
+        this.ativo = false;
     }
 }

@@ -3,6 +3,9 @@ package santaDose.voll.apiBack.controller;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import santaDose.voll.apiBack.produtos.*;
 
@@ -28,10 +31,29 @@ public class ProdutosController {
     //Metodo para listagem, não pode ser void pois fará um retorno para um usuário
     //Não precisa do @Transactional pois não esta criando nem escrevendo no banco de dados, apenas lendo e listando
     @GetMapping
-    public List<DadosListagemProdutos> listar(){
-        return repositorioProdutos.findAll().stream().map(DadosListagemProdutos::new).toList();
+    public Page<DadosListagemProdutos> listar(@PageableDefault(size = 20, sort = {"nome"}) Pageable ordenacao){ //Pageable para colocar a listagem dos itens em ordem alfabetica
+        return repositorioProdutos.findAllByAtivoTrue(ordenacao).map(DadosListagemProdutos::new);
         //Se for retornar tudo sem frescura do que ta vindo, o codigo poderia acabar no repositorioProdutos.findAll()
         //Se quiser escolher dos dados, o que retornar, vai ter que criar um record de listagem, depois criar um construtor, e por fim usar essa linha que eu fiz.
+
+    }
+
+    //PutMapping seria para a parte de atualização, para mapear aonde a att vai
+    //Tranasactional desta vez será usada também pois vai reescrever algo no banco de dados, então tem que ser usado
+    @PutMapping
+    @Transactional
+    public void atualizar(@RequestBody @Valid DadosAtualizacaoProdutos dados){
+        var produtos = repositorioProdutos.getReferenceById(dados.id());
+        produtos.atualizarInformacoesProdutos(dados);
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void excluir(@PathVariable Long id){
+        //repositorioProdutos.deleteById(id) para excluir tdo de vez do banco
+        //Do jeito que tá, esta tornando apenas o produto como inativo
+        var produtos = repositorioProdutos.getReferenceById(id);
+        produtos.excluir();
 
     }
 
