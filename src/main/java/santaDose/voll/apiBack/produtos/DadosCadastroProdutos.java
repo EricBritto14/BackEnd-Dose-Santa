@@ -19,11 +19,14 @@ public record DadosCadastroProdutos(
         String tipo,
         @NotBlank
         String nome,
-        @NotNull
+        @NotBlank
         String valor,
         @NotBlank
                 @Pattern(regexp = "\\d{1,4}")
         String tamanho,
+
+        @NotNull
+        String mlL,
         @NotBlank
                 @DateTimeFormat
         String datavalidade,

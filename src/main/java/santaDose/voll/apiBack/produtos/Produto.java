@@ -19,9 +19,16 @@ public class Produto {
     private String nome;
     private String valor;
     private String tamanho;
+    private String mlL;
     private String datavalidade;
     private String datacadastro;
     private String quantidade;
+
+
+    //Para alterar alguma table ou algo no banco de dados como inserir um novo valor ... devemos aqui criar o private dessa nova variavel
+    //Depois passar essa nova variavel no construtor
+    //Depois passar ela no DadosCadastroProdutos
+    //E por fim, criar uma nova migration no banco de dados por causa do flyway, então criar uma nova V3 e alterar o que quiser alterar
 
     //Criando o construtor que pega os exatos valores para retornar no ProdutosController e salvar no banco de dados
     public Produto(DadosCadastroProdutos dados) {
@@ -29,6 +36,7 @@ public class Produto {
         this.nome = dados.nome();
         this.valor = dados.valor();
         this.tamanho = dados.tamanho();
+        this.mlL = dados.mlL();
         this.datavalidade = dados.datavalidade();
         this.datacadastro = dados.datacadastro();
         this.quantidade = dados.quantidade();
