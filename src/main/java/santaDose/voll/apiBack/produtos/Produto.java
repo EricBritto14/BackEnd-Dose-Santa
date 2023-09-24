@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+//CLASSE JPA = JAVA P API
+
 @Table(name = "produtos") // Entidade e tabela dos bancos de dados
 @Entity(name = "Produtos")
 @Getter //Criando todos os getters sem precisar codar

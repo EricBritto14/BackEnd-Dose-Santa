@@ -1,4 +1,4 @@
-package santaDose.voll.apiBack.produtos;
+package santaDose.voll.apiBack.produtosVariedade;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
