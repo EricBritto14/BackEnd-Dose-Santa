@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import santaDose.voll.apiBack.infra.security.DadosTokenJWT;
 import santaDose.voll.apiBack.infra.security.TokenService;
 import santaDose.voll.apiBack.usuario.DadosAutenticacao;
 import santaDose.voll.apiBack.usuario.Usuario;
@@ -25,9 +26,11 @@ public class AutenticacaoController {
 
     @PostMapping //Post pois esta recebendo dados
     public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAutenticacao dados){
-        var token = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha()); //UserNamePassword e etc, é a classe do proprio String usada como padrão, onde nela a gente só precisa passar nosso DTO no caso o login e a senha nosso, passando no DTO deles (classe deles)
-        var authentication = manager.authenticate(token);
+        var authenticationToken = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha()); //UserNamePassword e etc, é a classe do proprio String usada como padrão, onde nela a gente só precisa passar nosso DTO no caso o login e a senha nosso, passando no DTO deles (classe deles)
+        var authentication = manager.authenticate(authenticationToken);
 
-        return ResponseEntity.ok(tokenService.gerarToken((Usuario) authentication.getPrincipal()));
+        var tokenValor = tokenService.gerarToken((Usuario) authentication.getPrincipal());
+
+        return ResponseEntity.ok(new DadosTokenJWT(tokenValor));
     }
 }
