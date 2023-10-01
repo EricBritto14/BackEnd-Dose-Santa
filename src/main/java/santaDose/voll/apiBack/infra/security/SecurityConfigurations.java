@@ -1,7 +1,10 @@
 package santaDose.voll.apiBack.infra.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,15 +14,28 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration // Para indicar que é uma classe de configurações para o Spring
 @EnableWebSecurity //Para indicar que são personalizações de segurança
 public class SecurityConfigurations {
+
+    @Autowired
+    private SecurityFilter securityFilter;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http.csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                        .authorizeHttpRequests(req -> req.requestMatchers(HttpMethod.POST, "/login").permitAll()
+                                .requestMatchers(HttpMethod.DELETE, "/produtos").hasRole("ADMIN")
+                                .anyRequest()
+                                .authenticated())
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class) //Codigo para dizer para o Spring que o meu filtro de validação deve vir primeiro que o dele, se não da b.o
                 .build();
+
+
     }
 
     //Esse throws Exception, você só vai usar quando um metodo exige um retorno de exception, como por exemplo esse configuration.getAuthenticationManager()

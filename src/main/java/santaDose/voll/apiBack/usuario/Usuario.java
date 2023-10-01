@@ -9,8 +9,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 //Criando uma JPA assim como as outras classem q não são DTO, para o cadastro do usuario e assim entrar na API para pegar as informações
 @Table(name = "usuarios") // Entidade e tabela dos bancos de dados
@@ -62,4 +64,5 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
