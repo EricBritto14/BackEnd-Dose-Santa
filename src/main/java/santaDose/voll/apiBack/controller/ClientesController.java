@@ -1,6 +1,7 @@
 package santaDose.voll.apiBack.controller;
 
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.util.List;
 //@RequestMapping para dizer qual mapeamento este controller vai responder, sempre que digitar a url /hello vai aparecer este controller
 @RestController
 @RequestMapping("clientes")
+@SecurityRequirement(name = "bearer-key")
 public class ClientesController {
     @Autowired //Autowired para mostrar pro SpringBoot que seria este o atributo responsavel por passar a interface na classe do controller
     private ClientesRepository repositorioClientes;

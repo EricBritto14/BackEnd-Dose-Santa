@@ -6,19 +6,21 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
+
 public record DadosPedidoProdutos(
+        @NotNull
     Long idProduto,
 
     @NotNull
     Long idPedinte,
 
     @NotNull
-    String quantidade,
+    Long idVariedades,
+//    @NotNull
+//    Long quantidade,
 
-    @NotNull
-    String formaPagamento,
-
-    @NotNull
+        //Criar aqui os String ou Long para forma de pagamento e quantidade
+      @NotNull
     @FutureOrPresent
     LocalDateTime data) {
 }

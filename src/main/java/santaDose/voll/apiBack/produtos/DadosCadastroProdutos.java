@@ -14,7 +14,8 @@ public record DadosCadastroProdutos(
         //Usando o beenValidation para na hora de cadastrar os produtos, não receber nenhum valor null ou blank pra tentar salvar no banco de dados
         //NotBlank só para campos String
         //Patter é para as variaveis de valores, assim determinando a quantidade minima de caracteres e a maxima
-
+        @NotNull
+        Long id,
         @NotBlank
         String tipo,
         @NotBlank

@@ -1,5 +1,6 @@
 package santaDose.voll.apiBack.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import santaDose.voll.apiBack.produtosVariedade.*;
 
 @RestController
 @RequestMapping("variedades")
+@SecurityRequirement(name = "bearer-key")
 public class VariedadesController {
     @Autowired //Autowired para mostrar pro SpringBoot que seria este o atributo responsavel por passar a interface na classe do controller
     private VariedadesRepository repositorioVariedades;

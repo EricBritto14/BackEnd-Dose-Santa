@@ -23,12 +23,14 @@ public class SecurityConfigurations {
     @Autowired
     private SecurityFilter securityFilter;
 
+    //@Bean serve para exportar uma classe para o Spring, fazendo com que ele consiga carregá-la e realize a sua injeção de dependência em outras classes
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http.csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                        .authorizeHttpRequests(req -> req.requestMatchers(HttpMethod.POST, "/login").permitAll()
+                .authorizeHttpRequests(req -> req.requestMatchers(HttpMethod.POST, "/login").permitAll()
+                                .requestMatchers( "/v3/api-docs/**", "/swagger-ui.html",  "/swagger-ui/**").permitAll()
                                 .requestMatchers(HttpMethod.DELETE, "/produtos").hasRole("ADMIN")
                                 .anyRequest()
                                 .authenticated())

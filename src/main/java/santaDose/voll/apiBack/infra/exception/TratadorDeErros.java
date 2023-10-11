@@ -1,6 +1,7 @@
 package santaDose.voll.apiBack.infra.exception;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ValidationException;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,14 @@ public class TratadorDeErros {
     public ResponseEntity tratarErro400(MethodArgumentNotValidException erro400){
         var erro = erro400.getFieldErrors(); //Criando uma variavel para guardar qual das informações necessarias o usuario esqueceu de preencher
         return ResponseEntity.badRequest().body(erro.stream().map(DadosErroValidacao::new).toList()); //Retornar o erro 400 em alguma exception
+        //Esse ::new seria para chamar o construtor
+
+    }
+
+    @ExceptionHandler(ValidationException.class) //@MethodArgumentNotValidException para quando haver uma exception(erro) de codigo 400
+    //Ele vai retornar esse metodo especifico e vai retornar erro 400
+    public ResponseEntity tratarErroPedidoDeProduto(ValidationException ex){
+        return ResponseEntity.badRequest().body(ex.getMessage()); //Retornar o erro 400 em alguma exception
         //Esse ::new seria para chamar o construtor
 
     }

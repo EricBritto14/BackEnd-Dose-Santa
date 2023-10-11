@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import santaDose.voll.apiBack.pedidos.MotivoCancelamento;
 
 //CLASSE JPA = JAVA P API
 
@@ -67,7 +68,9 @@ public class Cliente {
         }
     }
 
+
     public void excluir() {
         this.ativo = false;
     }
+
 }
